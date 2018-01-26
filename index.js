@@ -8,7 +8,7 @@ const glob = require('glob')
 const shell = require('shelljs')
 const prependFile = require('prepend-file')
 
-const NO_DELETE = true
+const NO_DELETE = false
 
 const options = {
 	nodir: true,
@@ -45,6 +45,7 @@ glob(
 
 			rl.on('close', function() {
 				if (commentLines && !NO_DELETE) {
+					commentLines++
 					// remove old header
 					shell.exec("sed -i '' 1," + commentLines + 'd ' + fname, {
 						silent: true
@@ -52,7 +53,7 @@ glob(
 				}
 				// prepend new header
 				const comment =
-					marker + template.replace(/\n/g, '\n' + marker) + '\n'
+					marker + template.replace(/\n/g, '\n' + marker) + '\n\n'
 				prependFile(fname, comment, function(err) {
 					if (err) {
 						console.error('Error prepending to file: ' + fname)
