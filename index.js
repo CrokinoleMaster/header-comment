@@ -42,12 +42,15 @@ glob(
 			})
 
 			rl.on('close', function() {
-				// remove old header
-				shell.exec("sed -i '' 1," + commentLines + 'd ' + fname, {
-					silent: true
-				})
+				if (commentLines) {
+					// remove old header
+					shell.exec("sed -i '' 1," + commentLines + 'd ' + fname, {
+						silent: true
+					})
+				}
 				// prepend new header
-				const comment = '//' + template.replace(/\n/g, '\n//') + '\n'
+				const comment =
+					marker + template.replace(/\n/g, '\n' + marker) + '\n'
 				prependFile(fname, comment, function(err) {
 					if (err) {
 						console.error('Error prepending to file: ' + fname)
