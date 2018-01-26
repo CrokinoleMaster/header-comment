@@ -47,7 +47,7 @@ glob(
 					silent: true
 				})
 				// prepend new header
-				const comment = '//' + template.replace(/\n/g, '\n//')
+				const comment = '//' + template.replace(/\n/g, '\n//') + '\n'
 				prependFile(fname, comment, function(err) {
 					if (err) {
 						console.error('Error prepending to file: ' + fname)
