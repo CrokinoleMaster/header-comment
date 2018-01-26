@@ -10,7 +10,7 @@ const prependFile = require('prepend-file')
 
 const options = {
 	nodir: true,
-	ignore: ['./test_dir/**/exclude/**']
+	ignore: ['**/exclude/**']
 }
 
 const commentMarkers = {
@@ -20,7 +20,9 @@ const commentMarkers = {
 
 const template = 'line one\nline two\nline three'
 
-glob('./test_dir/**/+(*.js|*.py)', options, (err, files) => {
+glob('test_dir/**/+(*.js|*.py)', options, (err, files) => {
+	console.log(files)
+	return
 	files.forEach(fname => {
 		const extension = path.extname(fname).slice(1)
 		const marker = commentMarkers[extension]

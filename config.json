@@ -1,4 +1,7 @@
 {
-	"js": "//",
-	"py": "#"
+	"ignore": ["**/node_modules/**"],
+	"commentMarkers": {
+		"js": "//",
+		"py": "#"
+	}
 }
