@@ -8,7 +8,7 @@ const glob = require('glob')
 const shell = require('shelljs')
 const prependFile = require('prepend-file')
 
-const NO_DELETE = false
+const NO_DELETE = true
 
 const options = {
 	nodir: true,
@@ -53,7 +53,10 @@ glob(
 				}
 				// prepend new header
 				const comment =
-					marker + template.replace(/\n/g, '\n' + marker) + '\n\n'
+					marker +
+					' ' +
+					template.replace(/\n/g, '\n' + marker + ' ') +
+					'\n\n'
 				prependFile(fname, comment, function(err) {
 					if (err) {
 						console.error('Error prepending to file: ' + fname)
