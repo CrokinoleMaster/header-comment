@@ -10,48 +10,52 @@ const prependFile = require('prepend-file')
 
 const options = {
 	nodir: true,
-	ignore: ['**/exclude/**']
+	ignore: ['**/node_modules/**']
 }
 
 const commentMarkers = {
 	js: '//',
+	jsx: '//',
 	py: '#'
 }
 
-const template = 'line one\nline two\nline three'
+const template =
+	'Copyright {year} Orbital Insight Inc., all rights reserved.\nContains confidential and trade secret information.\nGovernment Users:  Commercial Computer Software - Use governed by\nterms of Orbital Insight commercial license agreement.'
 
-glob('test_dir/**/+(*.js|*.py)', options, (err, files) => {
-	console.log(files)
-	return
-	files.forEach(fname => {
-		const extension = path.extname(fname).slice(1)
-		const marker = commentMarkers[extension]
-		const instream = fs.createReadStream(fname)
-		const outstream = new stream()
-		const rl = readline.createInterface(instream, outstream)
-		let commentLines = 0
-		rl.on('line', function(line) {
-			if (line.startsWith(marker)) {
-				commentLines++
-			} else {
-				rl.close()
-			}
-		})
-
-		rl.on('close', function() {
-			// remove old header
-			shell.exec("sed -i '' 1," + commentLines + 'd ' + fname, {
-				silent: true
-			})
-			// prepend new header
-			const comment = '//' + template.replace(/\n/g, '\n//')
-			prependFile(fname, comment, function(err) {
-				if (err) {
-					console.error('Error prepending to file: ' + fname)
+glob(
+	'/Users/huarui/orbital/base/pegasus/pegasus/**/+(*.js|*.jsx|*.py)',
+	options,
+	(err, files) => {
+		files.forEach(fname => {
+			const extension = path.extname(fname).slice(1)
+			const marker = commentMarkers[extension]
+			const instream = fs.createReadStream(fname)
+			const outstream = new stream()
+			const rl = readline.createInterface(instream, outstream)
+			let commentLines = 0
+			rl.on('line', function(line) {
+				if (line.startsWith(marker)) {
+					commentLines++
 				} else {
-					console.log('added comment to file: ' + fname)
+					rl.close()
 				}
 			})
+
+			rl.on('close', function() {
+				// remove old header
+				shell.exec("sed -i '' 1," + commentLines + 'd ' + fname, {
+					silent: true
+				})
+				// prepend new header
+				const comment = '//' + template.replace(/\n/g, '\n//')
+				prependFile(fname, comment, function(err) {
+					if (err) {
+						console.error('Error prepending to file: ' + fname)
+					} else {
+						console.log('added comment to file: ' + fname)
+					}
+				})
+			})
 		})
-	})
-})
+	}
+)
