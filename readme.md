@@ -1,28 +1,27 @@
-# <%= moduleName %> [![Build Status](https://travis-ci.org/<%= githubUsername %>/<%= moduleName %>.svg?branch=master)](https://travis-ci.org/<%= githubUsername %>/<%= moduleName %>)
+header-comment
 
 >
+wip
 
 
 ## Install
 
 ```
-$ npm install <%= moduleName %>
+$ npm install header-comment
 ```
 
 
 ## Usage
 
 ```js
-const <%= camelModuleName %> = require('<%= moduleName %>');
+const headerComment = require('header-comment');
 
-<%= camelModuleName %>('unicorns');
-//=> 'unicorns & rainbows'
 ```
 
 
 ## API
 
-### <%= camelModuleName %>(input, [options])
+### headerComment(input, [options])
 
 #### input
 
