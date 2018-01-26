@@ -8,7 +8,7 @@ const glob = require('glob')
 const shell = require('shelljs')
 const prependFile = require('prepend-file')
 
-const NO_DELETE = true
+const NO_DELETE = false
 
 const options = {
 	nodir: true,
@@ -22,7 +22,7 @@ const commentMarkers = {
 }
 
 const template =
-	'Copyright {year} Orbital Insight Inc., all rights reserved.\nContains confidential and trade secret information.\nGovernment Users:  Commercial Computer Software - Use governed by\nterms of Orbital Insight commercial license agreement.'
+	'Copyright 2018 Orbital Insight Inc., all rights reserved.\nContains confidential and trade secret information.\nGovernment Users:  Commercial Computer Software - Use governed by\nterms of Orbital Insight commercial license agreement.'
 
 glob(
 	'/Users/huarui/orbital/base/pegasus/pegasus/**/+(*.js|*.jsx|*.py)',
