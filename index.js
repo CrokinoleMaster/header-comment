@@ -5,6 +5,7 @@ const fs = require('fs')
 const readline = require('readline')
 const stream = require('stream')
 const glob = require('glob')
+const shell = require('shelljs')
 
 const options = {
 	nodir: true,
@@ -33,7 +34,9 @@ glob('./test_dir/**/+(*.js|*.py)', options, (err, files) => {
 		})
 
 		rl.on('close', function() {
-			console.log(fname, commentLines)
+			shell.exec("sed -i '' 1," + commentLines + 'd ' + fname, {
+				silent: true
+			})
 		})
 	})
 })
