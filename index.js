@@ -8,6 +8,8 @@ const glob = require('glob')
 const shell = require('shelljs')
 const prependFile = require('prepend-file')
 
+const NO_DELETE = true
+
 const options = {
 	nodir: true,
 	ignore: ['**/node_modules/**']
@@ -42,7 +44,7 @@ glob(
 			})
 
 			rl.on('close', function() {
-				if (commentLines) {
+				if (commentLines && !NO_DELETE) {
 					// remove old header
 					shell.exec("sed -i '' 1," + commentLines + 'd ' + fname, {
 						silent: true
