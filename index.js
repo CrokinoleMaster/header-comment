@@ -6,6 +6,7 @@ const readline = require('readline')
 const stream = require('stream')
 const glob = require('glob')
 const shell = require('shelljs')
+const prependFile = require('prepend-file')
 
 const options = {
 	nodir: true,
@@ -16,6 +17,8 @@ const commentMarkers = {
 	js: '//',
 	py: '#'
 }
+
+const template = 'line one\nline two\nline three'
 
 glob('./test_dir/**/+(*.js|*.py)', options, (err, files) => {
 	files.forEach(fname => {
@@ -34,8 +37,18 @@ glob('./test_dir/**/+(*.js|*.py)', options, (err, files) => {
 		})
 
 		rl.on('close', function() {
+			// remove old header
 			shell.exec("sed -i '' 1," + commentLines + 'd ' + fname, {
 				silent: true
+			})
+			// prepend new header
+			const comment = '//' + template.replace(/\n/g, '\n//')
+			prependFile(fname, comment, function(err) {
+				if (err) {
+					console.error('Error prepending to file: ' + fname)
+				} else {
+					console.log('added comment to file: ' + fname)
+				}
 			})
 		})
 	})
