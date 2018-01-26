@@ -21,8 +21,7 @@ const commentMarkers = {
 	py: '#'
 }
 
-const template =
-	'Copyright 2018 Orbital Insight Inc., all rights reserved.\nContains confidential and trade secret information.\nGovernment Users:  Commercial Computer Software - Use governed by\nterms of Orbital Insight commercial license agreement.'
+const template = 'some kind of copyright header.\nSecond line.'
 
 glob(
 	'/Users/huarui/orbital/base/pegasus/pegasus/**/+(*.js|*.jsx|*.py)',
