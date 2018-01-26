@@ -24,7 +24,7 @@ const commentMarkers = {
 const template = 'some kind of copyright header.\nSecond line.'
 
 glob(
-	'/Users/huarui/orbital/base/pegasus/pegasus/**/+(*.js|*.jsx|*.py)',
+	'project/**/+(*.js|*.jsx|*.py)',
 	options,
 	(err, files) => {
 		files.forEach(fname => {
