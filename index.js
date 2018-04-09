@@ -8,6 +8,7 @@ const stream = require('stream')
 const glob = require('glob')
 const shell = require('shelljs')
 const prependFile = require('prepend-file')
+const program = require('commander')
 
 const NO_DELETE = false
 
@@ -23,6 +24,17 @@ const commentMarkers = {
 }
 
 const template = 'some kind of copyright header.\nSecond line.'
+
+program
+	.version('0.1.0')
+	.option('-c, --config <path>', 'Configuration file')
+	.parse(process.argv)
+
+if (!program.config || !fs.existsSync(program.config)) {
+	consola.error(new Error('Config path does not exist'))
+	return
+}
+consola.info(program.config)
 
 glob('project/**/+(*.js|*.jsx|*.py)', options, (err, files) => {
 	files.forEach(fname => {
